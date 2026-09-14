@@ -32,3 +32,17 @@
     - GND -- GND (black)
     - SCL -- GPIO22 (purple)
     - SDA -- GPIO21 (blue)
+7. Verified the wiring using an I2C (I2C is a protocol) scanner in the Thonny Shell. Ran the following commands:
+    - import machine
+    - i2c = machine.I2C(scl=machine.Pin(22), sda=machine.Pin(21))
+    - print([hex(addr) for addr in i2c.scan()])
+    - Result: ['0x76'] — confirms the BME280 is wired correctly and
+      responding on the I2C bus at address 0x76.
+8. Installed the BME280 MicroPython driver (bme280_float.py, by robert-hh - https://github.com/robert-hh/BME280) onto the ESP32 via Thonny. I also added created another script:
+    - Wrote a short test script (node/main.py) that imports the driver,
+      initialises it using the confirmed I2C address (0x76), and prints
+      temperature, pressure, and humidity readings in a loop every 5
+      seconds.
+    - Ran the script and confirmed the values looked sane, roughly
+      matching readings from my phone.
+    - Saved and committed node/main.py to the repo.
