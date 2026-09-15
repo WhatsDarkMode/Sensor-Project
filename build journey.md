@@ -46,3 +46,14 @@
     - Ran the script and confirmed the values looked sane, roughly
       matching readings from my phone.
     - Saved and committed node/main.py to the repo.
+9. Connected the ESP32 to home WiFi using MicroPython's built-in network
+   module.
+    - Created a 'config.py' file (excluded from git via '.gitignore') to
+      store the WiFi SSID and password separately from the connection
+      logic.
+    - Wrote 'node/wifi_test.py', which builds a WLAN object in Station
+      mode, activates the radio, and connects using the credentials imported from 'config.py'.
+    - Ran the script and confirmed a successful connection:
+      ('192.168.1.67', '255.255.255.0', '192.168.1.254', '192.168.1.254')
+      — IP address, subnet mask, gateway, and DNS server, obtained
+      automatically via DHCP.
