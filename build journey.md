@@ -57,3 +57,28 @@
       ('192.168.1.67', '255.255.255.0', '192.168.1.254', '192.168.1.254')
       — IP address, subnet mask, gateway, and DNS server, obtained
       automatically via DHCP.
+10. Set up the hosted database (Supabase).
+    - Created a free Supabase account and a new project.
+    - Created a 'readings' table via the Table Editor: 'id' (auto
+      primary key), 'room' (text), 'temperature' (float8), 'humidity'
+      (float8), 'timestamp' (timestamptz, default 'now()').
+    - Exposed the table via Integrations → Data API, confirming the
+      'public' schema and 'readings' table were both enabled.
+    - Created a dedicated Supabase Auth account to represent the sensor
+      nodes, rather than relying on the publishable key alone — restricted the table's RLS insert policy to 'authenticated' users only, rather than the default "for all"
+      template.
+    - Retrieved the project URL and publishable API key from
+      Settings → API Keys, and stored these — along with the sensor
+      account's email/password — in 'config.py'.
+    - Deliberately kept the project's secret API key and database
+      password out of 'config.py' entirely, reserved for the future
+      backend service only — the sensor node has no need for either.
+12. Tested sending a reading to the hosted database, end to end, using a
+    hardcoded test value.
+    - Wrote 'node/api_test.py': connects to WiFi, authenticates against
+      Supabase using the dedicated sensor account, then POSTs a
+      hardcoded reading to the 'readings' table.
+    - Ran the script and confirmed success: WiFi connected, auth
+      returned 200, insert returned 201.
+    - Verified directly in the Supabase Table Editor that the row was
+      actually created.
