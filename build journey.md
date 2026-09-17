@@ -73,7 +73,7 @@
     - Deliberately kept the project's secret API key and database
       password out of 'config.py' entirely, reserved for the future
       backend service only — the sensor node has no need for either.
-12. Tested sending a reading to the hosted database, end to end, using a
+11. Tested sending a reading to the hosted database, end to end, using a
     hardcoded test value.
     - Wrote 'node/api_test.py': connects to WiFi, authenticates against
       Supabase using the dedicated sensor account, then POSTs a
@@ -82,3 +82,22 @@
       returned 200, insert returned 201.
     - Verified directly in the Supabase Table Editor that the row was
       actually created.
+12. Combined WiFi, sensor reading, and database logic into the final
+    node script.
+    - Split the logic into separate, reusable files rather than one
+      large script: 'node/wifi.py' (connect(), with a timeout-based
+      retry rather than an indefinite wait), 'node/db.py' (login() and
+      insert_reading()), and 'node/main.py' (orchestrates the actual
+      loop: connect, read sensor, insert, sleep 60s, repeat).
+    - main.py logs in to Supabase once at startup (rather than on every
+      loop cycle) and re-checks/reconnects WiFi each cycle, giving basic
+      resilience against a dropped connection without needing a
+      separate special-case reconnect block.
+    - Wrapped the database insert in error handling so a single failed
+      request logs the issue and lets the loop continue to the next
+      cycle, rather than crashing the script outright.
+    - Moved the earlier standalone 'wifi_test.py' and 'api_test.py'
+      into 'node/dev_tests/'.
+    - Confirmed 'main.py' is saved directly onto the device's root
+      filesystem under this exact filename, since MicroPython
+      automatically runs a file named 'main.py' on every power-on/reset.
