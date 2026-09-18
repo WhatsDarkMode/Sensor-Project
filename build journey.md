@@ -101,3 +101,24 @@
     - Confirmed 'main.py' is saved directly onto the device's root
       filesystem under this exact filename, since MicroPython
       automatically runs a file named 'main.py' on every power-on/reset.
+13. Diagnosed persistent 0.0 humidity readings.
+    - Read the chip ID register directly (0xD0) via I2C: returned 0x58.
+    - 0x58 identifies the chip as a BMP280, not a genuine BME280 — the
+      breakout board was mislabeled at purchase. BMP280 has no
+      humidity sensor at all; 0.0 is not a bug.
+    - Temperature and pressure readings remain valid, since BMP280
+      measures both correctly.
+14. Updated 'main.py' and 'db.py' to send temperature and pressure only,
+    given the BMP280 hardware limitation identified in Step 13.
+    - 'bme.read_compensated_data()' still returns three values
+      (temperature, pressure, humidity) regardless of the missing
+      humidity sensor, so updated the unpacking to explicitly discard
+      the unused third value: 'temperature, pressure, _ = ...'
+    - Updated 'db.py''s 'insert_reading()' function signature to match,
+      removing the now-unused 'humidity' parameter.
+    - Hit and fixed a 'ValueError: too many values to unpack' error
+      caused by the mismatch between the driver's three return values
+      and the two-variable unpacking initially used.
+    - Ran the full 'main.py' script on the device and confirmed
+      temperature and pressure readings were sent successfully and
+      appeared correctly in the Supabase 'readings' table.

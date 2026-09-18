@@ -11,7 +11,7 @@ def login(supabase_url, supabase_key, supabase_node_email, supabase_node_pw):
     auth_response.close()
     return access_token
 
-def insert_reading(supabase_url, supabase_key, access_token, room, temperature, pressure, humidity):
+def insert_reading(supabase_url, supabase_key, access_token, room, temperature, pressure):
     response = urequests.post(
         supabase_url + "/rest/v1/readings",
         headers={
@@ -19,8 +19,9 @@ def insert_reading(supabase_url, supabase_key, access_token, room, temperature, 
         "apikey": supabase_key,
         "Authorization": "Bearer " + access_token
         },
-        data=ujson.dumps({"room": room, "temperature": temperature, "pressure": pressure, "humidity": humidity})
+        data=ujson.dumps({"room": room, "temperature": temperature, "pressure": pressure})
     )
     status = response.status_code
+    body = response.text
     response.close()
-    return status
+    return status, body

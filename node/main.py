@@ -23,14 +23,14 @@ while True:
         time.sleep(60)
         continue
 
-    temperature, pressure, humidity = bme.values
+    temperature, pressure, _ = bme.read_compensated_data()
 
     try:
-        status = db.insert_reading(SUPABASE_URL, SUPABASE_KEY, access_token, ROOM, temperature, pressure, humidity):
+        status, body = db.insert_reading(SUPABASE_URL, SUPABASE_KEY, access_token, ROOM, temperature, pressure)
         if status == 201:
-            print("Reading sent successfully:", temperature, humidity)
+            print("Reading sent successfully:", temperature, pressure)
         else:
-            print("Insert failed, status:", status)
+            print("Insert failed:", status, body)
     except Exception as e:
         print("Insert error:", e)
 
