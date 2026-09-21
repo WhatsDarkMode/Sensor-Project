@@ -122,3 +122,23 @@
     - Ran the full 'main.py' script on the device and confirmed
       temperature and pressure readings were sent successfully and
       appeared correctly in the Supabase 'readings' table.
+15. Set up the Streamlit app.
+    - Created a Python virtual environment for the project ('venv'),
+      isolating its dependencies from the rest of the system.
+    - Installed 'streamlit', 'pandas', and 'requests'; captured exact
+      versions in 'requirements.txt' via 'pip freeze'.
+    - Wrote a minimal 'app/app.py' (title + one line of text) to confirm
+      the development loop works before adding any real logic.
+    - Ran via 'streamlit run app.py' from inside the 'app' folder and
+      confirmed the page loads correctly in the browser, with auto-reload
+      on save.
+16. Verified read access to Supabase, standalone, before wiring into the
+    dashboard.
+    - Added an RLS policy allowing public SELECT access to 'readings'
+      (see ADR on public read access).
+    - Wrote 'app/fetch_test.py' — a standalone script (no Streamlit)
+      making a GET request to the Supabase REST API and printing the
+      result.
+    - Ran it and confirmed success: status 200, with real sensor
+      readings returned as JSON, including the temperature/pressure
+      readings sent so far.
