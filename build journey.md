@@ -142,3 +142,20 @@
     - Ran it and confirmed success: status 200, with real sensor
       readings returned as JSON, including the temperature/pressure
       readings sent so far.
+17. Wired real data into the Streamlit app for the first time.
+    - Moved the Supabase request logic out of 'fetch_test.py' into a
+      dedicated 'app/db.py', following the same separation pattern as 
+      'node/wifi.py' and 'node/db.py'.
+    - Updated 'app.py' to call 'db.fetch_readings()' and display the
+      result as a raw table via 'st.dataframe()'.
+    - Moved 'fetch_test.py' into 'app/dev_tests/'.
+    - Ran the app and confirmed real sensor readings display correctly
+      in the browser table.
+    - Replaced the raw table with a proper chart: converted the JSON
+      response into a pandas DataFrame, parsed 'timestamp' into a real
+      datetime and set it as the index, then plotted temperature and
+      pressure using Plotly on a dual y-axis (needed since the two
+      values sit on very different scales)
+    - Added a timezone selector ('zoneinfo'), converting the UTC
+      timestamps from Supabase into the viewer's chosen local timezone
+      before charting.
