@@ -159,3 +159,21 @@
     - Added a timezone selector ('zoneinfo'), converting the UTC
       timestamps from Supabase into the viewer's chosen local timezone
       before charting.
+18. Added an outdoor weather comparison to the dashboard.
+    - Added 'HOME_LATITUDE'/'HOME_LONGITUDE' to 'config.py'.
+    - Wrote 'app/weather.py', following the. Deliberately
+      requested 'surface_pressure' rather than 'pressure_msl' from
+      Open-Meteo — 'pressure_msl' is adjusted to sea level and would
+      introduce a systematic offset against the sensor's raw  pressure reading, 
+      unrelated to any genuine indoor/outdoor difference.
+    - Recognised the weather API's 'current' endpoint returns a single
+      point-in-time reading, not a time series — decided against
+      plotting it on the same chart as the sensor's historical data
+      (nothing to meaningfully compare it against yet), in favour of a
+      simple "indoor (latest) vs outside (now)" comparison using
+      'st.metric()'. A true historical overlay is deferred as a later
+      step, once node data is flowing continuously enough to be
+      meaningful (see 'sensor-project-summary.md' open questions).
+    - Extracted repeated status-check/error-display logic (for both
+      sensor and weather fetches) into a shared 'data_available()'
+      helper function.

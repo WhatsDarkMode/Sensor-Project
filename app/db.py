@@ -1,6 +1,6 @@
 import requests
 
-def fetch_readings(supabase_url, supabase_key):
+def fetch_sensor_readings(supabase_url, supabase_key):
     # Could make this function select more specific data 
     # to reduce network overhead and local compute
     params = {"select": "*"}
