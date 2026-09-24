@@ -1,6 +1,6 @@
 # Secrets - never commit
 **/config.py
-.streamlit/secrets.toml
+app/.streamlit/secrets.toml
 
 # Python
 __pycache__/
