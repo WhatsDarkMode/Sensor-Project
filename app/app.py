@@ -8,7 +8,11 @@ from plotly.subplots import make_subplots
 
 
 # ================= Import modules =================
-from config import SUPABASE_URL, SUPABASE_KEY, HOME_LATITUDE, HOME_LONGITUDE
+# from config import SUPABASE_URL, SUPABASE_KEY, HOME_LATITUDE, HOME_LONGITUDE
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
+HOME_LATITUDE = st.secrets["HOME_LATITUDE"]
+HOME_LONGITUDE = st.secrets["HOME_LONGITUDE"]
 import db
 import weather
 
