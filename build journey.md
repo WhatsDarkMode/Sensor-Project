@@ -177,3 +177,16 @@
     - Extracted repeated status-check/error-display logic (for both
       sensor and weather fetches) into a shared 'data_available()'
       helper function.
+19. Deployed the dashboard publicly via Streamlit Community Cloud.
+    - Switched from 'app/config.py' to Streamlit's own secrets system
+      ('.streamlit/secrets.toml'), read via 'st.secrets' rather than a
+      plain import — the standard, officially recommended pattern,
+      giving identical behaviour locally and once deployed rather than
+      needing separate logic for each environment.
+    - Pushed the repo to GitHub and deployed via share.streamlit.io,
+      connecting the public repo.
+    - Verified the live app in a private/incognito browser window to
+      confirm it genuinely works for a fresh visitor, not just
+      locally.
+    - Confirmed the dashboard is live and publicly viewable at
+      [https://sensor-project.streamlit.app/], alongside the public GitHub repo.
