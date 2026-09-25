@@ -16,7 +16,7 @@ HOME_LONGITUDE = st.secrets["HOME_LONGITUDE"]
 import db
 import weather
 
-st.title("Temperature Comparer Dashboard")
+st.title("Temperature Comparison Dashboard")
 
 # ================= Functions =================
 def data_available(status, reading_type):
