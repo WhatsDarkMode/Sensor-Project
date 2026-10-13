@@ -7,6 +7,9 @@ against outdoor weather, using an ESP32 sensor node and a hosted database.
 🔗 [Live App](https://sensor-project.streamlit.app/) — publicly viewable, no login required.
 
 ## Status
+PAUSED - Project has been deliberately paused as i've reused the ESP32 board for the 
+Smart Plant Watering project i've started.
+
 Complete (v1) — one working sensor node reporting to a public dashboard,
 end to end. See "Future Improvements" below for what's deliberately out
 of scope for this version.
